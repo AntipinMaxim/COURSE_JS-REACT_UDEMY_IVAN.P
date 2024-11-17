@@ -7,13 +7,11 @@ const personalMovieDB = {
     genres: [],
     privat: false,
 
-    start: function() {4
+    start: function() {
         this.count = +prompt('Сколько фильмов вы уже посмотрели?','');
-    
         while(this.count == '' || this.count == null || isNaN(this.count)){
             this.count = +prompt('Сколько фильмов вы уже посмотрели?','');
         };
-        console.log(this.count);
     },
 
     rememberMyFilms: function() {
@@ -70,12 +68,13 @@ const personalMovieDB = {
     }
 };
 
-// personalMovieDB.start();
+personalMovieDB.start();
 // personalMovieDB.rememberMyFilms();
 // personalMovieDB.detectPersonalLevel();
-personalMovieDB.whiteYourGenres();
+// personalMovieDB.whiteYourGenres();
 // personalMovieDB.toggleVisibleMyDB(personalMovieDB.privat);
 personalMovieDB.showMyDB(personalMovieDB.privat);
+
 
 
 
