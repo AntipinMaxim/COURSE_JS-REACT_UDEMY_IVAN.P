@@ -1,6 +1,6 @@
 'use strict';
 
-let studends = {
+let students = {
     js: [{
         name: 'John',
         progress: 100
@@ -25,8 +25,8 @@ let studends = {
     }
 };
 
-function totalProgressStudends(data){
-    if(Array.isArray(data)) {
+function totalProgressStudents (data) {
+    if(Array.isArray(data)){
         let total = 0;
 
         for(let i = 0; i < data.length; i++){
@@ -34,17 +34,20 @@ function totalProgressStudends(data){
         }
 
         return [total, data.length];
-
     } else {
         let total = [0, 0];
 
-        for(let subData of Object.values(data)){
-            const subDataArr = totalProgressStudends(subData);
-            total[0] += subDataArr[0];
-            total[1] += subDataArr[1];
+        for (const obj of Object.values(data)) {
+            let arr = totalProgressStudents(obj);
+
+            total[0] += arr[0];
+            total[1] += arr[1];
         }
+
         return total;
     }
-};
+}
 
-console.log(totalProgressStudends(studends)[0]/totalProgressStudends(studends)[1]);
+let total = totalProgressStudents(students);
+
+console.log(total[0]/total[1]);
