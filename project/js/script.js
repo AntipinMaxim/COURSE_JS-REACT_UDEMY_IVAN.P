@@ -1,17 +1,3 @@
-/* Задания на урок:
-
-1) Удалить все рекламные блоки со страницы (правая часть сайта)
-
-2) Изменить жанр фильма, поменять "комедия" на "драма"
-
-3) Изменить задний фон постера с фильмом на изображение "bg.jpg". Оно лежит в папке img.
-Реализовать только при помощи JS
-
-4) Список фильмов на странице сформировать на основании данных из этого JS файла.
-Отсортировать их по алфавиту 
-
-5) Добавить нумерацию выведенных фильмов */
-
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -55,15 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 </li>
             `;
         });
+    }
 
-        document.querySelectorAll('.delete').forEach((btn, i) =>{
-            btn.addEventListener('click', (e) => {
-                btn.parentElement.remove();
-                films.splice(i, 1);
-
-                сreateMovieList(films, parent);
-            });
-        });
+    const removeFilm = (btn, films) => {
+        btn.parentElement.remove();
+        films.splice(btn, 1);
+        сreateMovieList(movieDB.movies, movieList);
     }
 
     const sortArr = (arr) => {
@@ -100,6 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
         сreateMovieList(movieDB.movies, movieList);
 
         e.target.reset();
+    });
+
+    movieList.addEventListener('click', (e) => {
+        if(e.target && e.target.classList.contains('delete')) {
+            removeFilm(e.target, movieDB.movies);
+        }
     });
 
     deleteAdv(advBlocks);
