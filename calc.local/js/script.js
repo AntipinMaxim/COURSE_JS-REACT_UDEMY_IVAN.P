@@ -18,6 +18,6 @@ inputRub.addEventListener('input', () => {
             inputUsd.value = 'Что-то пошло не так';
         }
     })
-    // inputUsd.value = inputRub.value * cursUsd;
+    
 });
 

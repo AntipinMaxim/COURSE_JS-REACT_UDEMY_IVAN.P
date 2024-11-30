@@ -109,10 +109,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     // Modal
-    const modalCloseBtn = document.querySelector('.modal__close'),
-          modalTrigger = document.querySelectorAll('[data-modal]'),
+    const modalTrigger = document.querySelectorAll('[data-modal]'),
           modal = document.querySelector('.modal'),
-          timerModal = setTimeout(showModal, 5000);
+          timerModal = setTimeout(showModal, 50000);
 
     function showModal() {
         modal.classList.add('show');
@@ -137,12 +136,8 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    modalCloseBtn.addEventListener('click', () => {
-        closeModal();
-    });
-
     modal.addEventListener('click', (e) => {
-        if(e.target === modal){
+        if(e.target === modal || e.target.getAttribute('data-close') == ''){
             closeModal();
         }
     });
@@ -232,5 +227,72 @@ window.addEventListener('DOMContentLoaded', () => {
         "Меню 'Постное' - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.", 
         430,
         ".menu .container").render();
+
+    // Forms
+
+    const statusMessage = {
+          loading: 'img/form/spinner.svg',
+          succsess: 'Спасибо скоро мы с вами свяжемся!',
+          failure: 'Что-то пошло не так'
+        }
+
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        postDate(form);
+    })
+
+    function postDate(form){
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const blockMessage = document.createElement('img');
+            blockMessage.src = statusMessage.loading;
     
+            form.append(blockMessage);
+            
+            const formData = new FormData(form);
+            fetch('server.php',{
+                method: 'POST',
+                // headers: {
+                //     'Content-Type': 'application/json'
+                // },
+                body: formData
+            }).then(data => data.text())
+            .then(data => {
+                console.log(data);
+                showThanksModal(statusMessage.succsess);
+                blockMessage.remove();
+            }).catch(()=>{
+                showThanksModal(statusMessage.failure);
+            }).finally(() => {
+                form.reset();
+            })
+        });
+    }
+
+    function showThanksModal(message){
+        const modalDialog = document.querySelector('.modal__dialog');
+        modalDialog.classList.add('hide');
+        showModal();
+
+        const modal = document.createElement('div');
+        modal.classList.add('modal__dialog');
+
+        modal.innerHTML = `
+            <div class="modal__content">
+                <div data-close class="modal__close">&times;</div>
+                <div class="modal__title">${message}</div>
+            </div>
+        `;
+
+        document.querySelector('.modal').append(modal);
+
+        setTimeout(function(){
+            modal.remove();
+            modalDialog.classList.add('show');
+            modalDialog.classList.remove('hide');
+            closeModal();
+        },2000)
+    }
+
 });
