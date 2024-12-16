@@ -1,4 +1,7 @@
-function forms () {
+import { showModal, closeModal } from "./modal";
+import { postData } from "./services/services";
+
+function forms (formSelector, timerModal) {
     // Forms
 
     const statusMessage = {
@@ -7,22 +10,10 @@ function forms () {
         failure: 'Что-то пошло не так'
       }
 
-  const forms = document.querySelectorAll('form');
+  const forms = document.querySelectorAll(formSelector);
   forms.forEach(form => {
       bindPostDate(form);
   })
-  
-  const postData = async (url, data) => {
-      const res = await fetch(url, {
-          method: 'POST',
-          headers: {
-              'Content-type': 'application/json'
-          },
-          body: data
-      });
-
-      return await res.json();
-  };
 
   function bindPostDate(form){
       form.addEventListener('submit', (e) => {
@@ -38,7 +29,6 @@ function forms () {
           
           postData('http://localhost:3000/requests', json)
           .then(data => {
-              console.log(data);
               showThanksModal(statusMessage.succsess);
               blockMessage.remove();
           }).catch(()=>{
@@ -52,7 +42,7 @@ function forms () {
   function showThanksModal(message){
       const modalDialog = document.querySelector('.modal__dialog');
       modalDialog.classList.add('hide');
-      showModal();
+      showModal('.modal', timerModal);
 
       const modal = document.createElement('div');
       modal.classList.add('modal__dialog');
@@ -70,9 +60,9 @@ function forms () {
           modal.remove();
           modalDialog.classList.add('show');
           modalDialog.classList.remove('hide');
-          closeModal();
+          closeModal('.modal');
       },2000)
   }
 }
 
-module.exports = forms;
+export default forms;

@@ -112,4 +112,4 @@ function calc() {
     getInputInformation('.calculating__choose_medium input');
 }
 
-module.exports = calc;
+export default calc;
