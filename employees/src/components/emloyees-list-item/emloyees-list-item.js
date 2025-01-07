@@ -1,7 +1,25 @@
+import { Component } from 'react';
+
 import './employees-list-item.css';
 
-const EmloyeesListItem = (props) => {
-        const {name, salary, onDelete, onToggleProp, increase, rise} = props;
+class EmloyeesListItem extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            name: this.props.name,
+            salary: this.props.salary
+        }
+    }
+
+    changeInput = (e) => {
+        this.setState(() => ({
+            salary: +e.target.value.slice(0, -1)
+        }))
+        this.props.onEditSalary(this.state.name, e.target.value);
+    }
+
+    render() {
+        const {name, salary, onDelete, onToggleProp, increase, rise} = this.props;
 
         let classNames = 'list-group-item d-flex justify-content-between';
 
@@ -18,7 +36,10 @@ const EmloyeesListItem = (props) => {
             <span className="list-group-item-label"
                   onClick={onToggleProp}
                   data-toggle='rise'>{name}</span>
-            <input type="text" className="list-group-item-input" defaultValue={salary + '$'} />
+            <input type="text" 
+                   className="list-group-item-input" 
+                   defaultValue={salary + '$'} 
+                   onChange={this.changeInput}/>
             <div className="d-flex justify-content-center align-items-center">
                 <button type="button"
                         className="btn-cookie btn-sm"
@@ -36,6 +57,10 @@ const EmloyeesListItem = (props) => {
             </div>
         </div>
     );
+    }
+
+    
+
 }
 
 export default EmloyeesListItem;
