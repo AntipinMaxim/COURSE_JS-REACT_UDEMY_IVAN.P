@@ -12,10 +12,15 @@ class EmloyeesListItem extends Component{
     }
 
     changeInput = (e) => {
+            e.target.value = (e.target.value.replace(/\D/g, ''));
+        const salary = e.target.value;
         this.setState(() => ({
-            salary: +e.target.value.slice(0, -1)
+            salary: +salary.slice(0, -1)
         }))
-        this.props.onEditSalary(this.state.name, e.target.value);
+        this.props.onEditSalary(this.state.name, salary);
+    }
+    onAddSymbol = (e) => {
+        e.target.value += '$';
     }
 
     render() {
@@ -39,7 +44,9 @@ class EmloyeesListItem extends Component{
             <input type="text" 
                    className="list-group-item-input" 
                    defaultValue={salary + '$'} 
-                   onChange={this.changeInput}/>
+                   onChange={this.changeInput}
+                   onClick={this.changeInput}
+                   onBlur={this.onAddSymbol}/>
             <div className="d-flex justify-content-center align-items-center">
                 <button type="button"
                         className="btn-cookie btn-sm"

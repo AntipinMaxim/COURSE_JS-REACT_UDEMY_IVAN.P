@@ -96,7 +96,6 @@ class App extends Component {
                 return item;
             })
         }))
-        console.log(editSalary, emplooyeName);
     }
 
     render() {
