@@ -83,12 +83,12 @@ class RandomChar extends Component {
 const View = ({char}) => {
     const {name, description, thumbnail, homepage, wiki} = char;
 
-    const styleImg = thumbnail.indexOf('image_not_available.jpg', 0) ? 'contain' : null;
+    let styleImg = thumbnail.indexOf('image_not_available.jpg', 0) != -1 ? 'contain' : 'cover';
     
 
     return(
         <div className="randomchar__block">
-        <img src={thumbnail} alt="Random character" className="randomchar__img" style={{objectFit: {styleImg}}}/>
+        <img src={thumbnail} alt="Random character" className="randomchar__img" style={{objectFit: styleImg}}/>
         <div className="randomchar__info">
             <p className="randomchar__name">{name}</p>
             <p className="randomchar__descr">
