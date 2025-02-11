@@ -4,7 +4,7 @@ const AppHeader = () => {
     return (
         <header className="app__header">
             <h1 className="app__title">
-                <a href="#">
+                <a href="/">
                     <span>Marvel</span> information portal
                 </a>
             </h1>
@@ -12,7 +12,7 @@ const AppHeader = () => {
                 <ul>
                     <li><a href="#">Characters</a></li>
                     /
-                    <li><a href="#">Comics</a></li>
+                    <li><a href="/comics">Comics</a></li>
                 </ul>
             </nav>
         </header>
